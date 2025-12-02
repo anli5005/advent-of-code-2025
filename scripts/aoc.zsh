@@ -5,6 +5,10 @@ day() {
     python $AOC_ROOT/scripts/day.py
 }
 
+dayleftpad() {
+    python $AOC_ROOT/scripts/dayleftpad.py
+}
+
 setup() {
     if [ ! -f $AOC_ROOT/.aocsession ]; then
         echo "No .aocsession file found. Please create one before continuing."
@@ -12,20 +16,21 @@ setup() {
     fi
 
     DAY="$(day)"
+    DAYLEFTPAD="$(dayleftpad)"
     YEAR="$(python $AOC_ROOT/scripts/year.py)"
     echo "Setting up for day $DAY of $YEAR..."
-    mkdir $AOC_ROOT/$DAY
-    cp $AOC_ROOT/template.py $AOC_ROOT/$DAY/$(echo $DAY)a.py
-    touch $AOC_ROOT/$DAY/$(echo $DAY)b.py
-    touch $AOC_ROOT/$DAY/s.txt
-    code $AOC_ROOT --goto $DAY/$(echo $DAY)a.py
+    mkdir $AOC_ROOT/$DAYLEFTPAD
+    cp $AOC_ROOT/template.py $AOC_ROOT/$DAYLEFTPAD/$(echo $DAYLEFTPAD)a.py
+    touch $AOC_ROOT/$DAYLEFTPAD/$(echo $DAYLEFTPAD)b.py
+    touch $AOC_ROOT/$DAYLEFTPAD/s.txt
+    code $AOC_ROOT --goto $DAYLEFTPAD/$(echo $DAYLEFTPAD)a.py
     if type xdg-open > /dev/null; then
         xdg-open https://adventofcode.com/$YEAR/day/$DAY
     else
         open https://adventofcode.com/$YEAR/day/$DAY
     fi
-    curl -A "https://github.com/anli5005/advent-of-code-$YEAR by me@anli.dev" https://adventofcode.com/$YEAR/day/$DAY/input --cookie "session=$(cat $AOC_ROOT/.aocsession)" > $AOC_ROOT/$DAY/$(echo $DAY).txt
-    truncate -s -1 $AOC_ROOT/$DAY/$(echo $DAY).txt
+    curl -A "https://github.com/anli5005/advent-of-code-$YEAR by me@anli.dev" https://adventofcode.com/$YEAR/day/$DAY/input --cookie "session=$(cat $AOC_ROOT/.aocsession)" > $AOC_ROOT/$DAYLEFTPAD/$(echo $DAYLEFTPAD).txt
+    truncate -s -1 $AOC_ROOT/$DAYLEFTPAD/$(echo $DAYLEFTPAD).txt
 }
 
 setuptimer() {
@@ -38,22 +43,22 @@ setuptimer() {
 }
 
 a() {
-    DAY="$(day)"
+    DAY="$(dayleftpad)"
     python $AOC_ROOT/$DAY/$(echo $DAY)a.py < $AOC_ROOT/$DAY/$(echo $DAY).txt
 }
 
 as() {
-    DAY="$(day)"
+    DAY="$(dayleftpad)"
     python $AOC_ROOT/$DAY/$(echo $DAY)a.py < $AOC_ROOT/$DAY/s.txt
 }
 
 b() {
-    DAY="$(day)"
+    DAY="$(dayleftpad)"
     python $AOC_ROOT/$DAY/$(echo $DAY)b.py < $AOC_ROOT/$DAY/$(echo $DAY).txt
 }
 
 bs() {
-    DAY="$(day)"
+    DAY="$(dayleftpad)"
     python $AOC_ROOT/$DAY/$(echo $DAY)b.py < $AOC_ROOT/$DAY/s.txt
 }
 
